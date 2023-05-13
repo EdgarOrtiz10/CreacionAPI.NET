@@ -1,4 +1,14 @@
+using ApiPeliculas.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Configuramos la conexion a sql server 
+builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
+{
+    opciones.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSql"));
+});
 
 // Add services to the container.
 
