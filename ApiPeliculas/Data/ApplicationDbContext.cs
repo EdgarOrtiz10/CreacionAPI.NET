@@ -1,0 +1,16 @@
+﻿using ApiPeliculas.Modelos; // Importa el espacio de nombres ApiPeliculas.Modelos
+using Microsoft.EntityFrameworkCore; // Importa el espacio de nombres Microsoft.EntityFrameworkCore
+
+namespace ApiPeliculas.Data // Define el espacio de nombres ApiPeliculas.Data
+{
+    public class ApplicationDbContext : DbContext // Define una clase llamada ApplicationDbContext que hereda de DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) // Constructor de la clase ApplicationDbContext que recibe DbContextOptions<ApplicationDbContext> como argumento y llama al constructor base de DbContext
+
+        {
+        }
+
+        // Agregar los modelos aquí
+        public DbSet<Categoria> Categoria { get; set; } // Propiedad pública de tipo DbSet<Categoria> llamada Categoria. DbSet se utiliza para representar una entidad o una colección de entidades en el contexto de Entity Framework Core.
+    }
+}
