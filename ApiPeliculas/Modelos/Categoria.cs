@@ -8,7 +8,7 @@ namespace ApiPeliculas.Modelos // Define el espacio de nombres ApiPeliculas.Mode
         public int Id { get; set; } // Define una propiedad pública llamada Id de tipo entero
 
         [Required] // Indica que la siguiente propiedad es obligatoria
-        public string MyProperty { get; set; } // Define una propiedad pública llamada MyProperty de tipo cadena de caracteres
+        public string Nombre { get; set; } // Define una propiedad pública llamada MyProperty de tipo cadena de caracteres
 
         public DateTime FechaCreacion { get; set; } // Define una propiedad pública llamada FechaCreacion de tipo DateTime
     }
