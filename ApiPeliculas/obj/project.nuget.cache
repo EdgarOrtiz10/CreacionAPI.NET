@@ -1,15 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "Jplk8ecTXICDlzhGqeFfbNx6qEl6RgIheRW3DnByeNtD0IYnj/+nQmN6pPMzRYHur4UZLzxDJ2KxgXpGkRj2OA==",
+  "dgSpecHash": "vEuhtQYEbWGopF9bpsleoJ+XSSbGGk9V4EObatREy2LNhL0zKr4nz6nTipCgCqCDEZbKLGdVKraB2ws08IBMYg==",
   "success": true,
   "projectFilePath": "C:\\Users\\EdgarOrtiz\\Documents\\MIS PROYECTOS\\API REST .NET\\ApiPeliculas\\ApiPeliculas\\ApiPeliculas.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.5\\microsoft.aspnetcore.openapi.7.0.5.nupkg.sha512",
     "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
-    "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\microsoft.data.sqlclient\\5.0.1\\microsoft.data.sqlclient.5.0.1.nupkg.sha512",
     "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.0.1\\microsoft.data.sqlclient.sni.runtime.5.0.1.nupkg.sha512",
     "C:\\Users\\EdgarOrtiz\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.5\\microsoft.entityframeworkcore.7.0.5.nupkg.sha512",
