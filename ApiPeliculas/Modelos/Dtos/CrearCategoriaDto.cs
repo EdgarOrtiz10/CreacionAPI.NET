@@ -9,7 +9,7 @@ namespace ApiPeliculas.Modelos.Dtos
 
         //Esta validación es importante sino se crea vacia el nombre de la categoria 
         [Required(ErrorMessage = "El nombre es obligatorio")] // Indica que la siguiente propiedad es obligatoria
-        [MaxLength(60, ErrorMessage = "El numero maximo de caracteres es de 60!")]
+        [MaxLength(100, ErrorMessage = "El numero maximo de caracteres es de 100!")]
         public string Nombre { get; set; } // Define una propiedad pública llamada MyProperty de tipo cadena de caracteres
     }
 }

@@ -85,5 +85,54 @@ namespace ApiPeliculas.Controllers
             return CreatedAtRoute("GetCategoria", new { categoriaId = categoria.Id }, categoria); // Retorna una respuesta HTTP 201 Created con la categoría creada en el cuerpo de la respuesta y la ubicación de la categoría en el encabezado de la respuesta
         }
 
+
+        [HttpPatch("{categoriaId:int}", Name = "ActualizarPatchCategoria")] // Atributo que indica que este método responde a una solicitud HTTP PATCH con una variable de ruta "categoriaId" de tipo entero y establece el nombre de ruta como "ActualizarPatchCategoria"
+        [ProducesResponseType(201, Type = typeof(CategoriaDto))] // Define el tipo de respuesta HTTP 201 y el tipo de dato devuelto es CategoriaDto
+        [ProducesResponseType(StatusCodes.Status204NoContent)] // Define el tipo de respuesta HTTP 204 No Content
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Define el tipo de respuesta HTTP 400 Bad Request
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)] // Define el tipo de respuesta HTTP 500 Internal Server Error
+        public IActionResult ActualizarPatchCategoria(int categoriaId, [FromBody] CategoriaDto categoriaDto) // Método público para actualizar una categoría utilizando HTTP PATCH, recibe el identificador de categoría en la ruta y un objeto CategoriaDto en el cuerpo de la solicitud
+        {
+            if (!ModelState.IsValid) // Verifica si el modelo recibido es válido según las validaciones definidas en el modelo
+            {
+                return BadRequest(); // Si el modelo no es válido, retorna una respuesta HTTP 400 Bad Request
+            }
+            if (categoriaDto == null || categoriaId != categoriaDto.Id) // Verifica si el objeto CategoriaDto recibido es nulo o si el identificador de categoría en el objeto no coincide con el identificador en la ruta
+            {
+                return BadRequest(ModelState); // Si es nulo o los identificadores no coinciden, retorna una respuesta HTTP 400 Bad Request y agrega el estado del modelo actual
+            }
+
+            var categoria = _mapper.Map<Categoria>(categoriaDto); // Mapea el objeto CategoriaDto a un objeto de tipo Categoria utilizando AutoMapper
+
+            if (!_ctRepo.ActualizarCategoria(categoria)) // Intenta actualizar la categoría en el repositorio
+            {
+                ModelState.AddModelError("", $"Algo salió mal actualizando el registro {categoria.Nombre}"); // Agrega un error de modelo indicando que hubo un problema al actualizar la categoría
+                return StatusCode(500, ModelState); // Retorna una respuesta HTTP 500 Internal Server Error y agrega el estado del modelo actual
+            }
+            return NoContent(); // Retorna una respuesta HTTP 204 No Content
+        }
+
+
+        [HttpDelete("{categoriaId:int}", Name = "BorrarCategoria")] // Atributo que indica que este método responde a una solicitud HTTP DELETE con una variable de ruta "categoriaId" de tipo entero y establece el nombre de ruta como "BorrarCategoria"
+        [ProducesResponseType(StatusCodes.Status204NoContent)] // Define el tipo de respuesta HTTP 204 No Content
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Define el tipo de respuesta HTTP 403 Forbidden
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // Define el tipo de respuesta HTTP 404 Not Found
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Define el tipo de respuesta HTTP 400 Bad Request
+        public IActionResult BorrarCategoria(int categoriaId) // Método público para borrar una categoría utilizando HTTP DELETE, recibe el identificador de categoría en la ruta
+        {
+            if (!_ctRepo.ExisteCategoria(categoriaId)) // Verifica si la categoría existe en el repositorio
+            {
+                return NotFound(); // Si la categoría no existe, retorna una respuesta HTTP 404 Not Found
+            }
+            var categoria = _ctRepo.GetCategoria(categoriaId); // Obtiene la categoría del repositorio utilizando el identificador
+            if (!_ctRepo.BorrarCategoria(categoria)) // Intenta borrar la categoría del repositorio
+            {
+                ModelState.AddModelError("", $"Algo salió mal borrando el registro {categoria.Nombre}"); // Agrega un error de modelo indicando que hubo un problema al borrar la categoría
+                return StatusCode(500, ModelState); // Retorna una respuesta HTTP 500 Internal Server Error y agrega el estado del modelo actual
+            }
+            return NoContent(); // Retorna una respuesta HTTP 204 No Content
+        }
+
+
     }
 }
