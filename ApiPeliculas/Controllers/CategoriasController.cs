@@ -38,5 +38,21 @@ namespace ApiPeliculas.Controllers
             }
             return Ok(listaCategoriasDto); // Devuelve la lista de DTOs de categoría en la respuesta HTTP con código de estado 200 OK
         }
+
+        [HttpGet ("{categoriaId:int})", Name = "GetCategoria")] // Atributo que indica que este método responde a las solicitudes HTTP GET
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Atributo que indica el tipo de respuesta HTTP que se produce cuando se deniega el acceso a este método
+        [ProducesResponseType(StatusCodes.Status200OK)] // Atributo que indica el tipo de respuesta HTTP que se produce cuando la solicitud es exitosa
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Atributo que indica el tipo de respuesta HTTP que se produce cuando la solicitud es incorrecta
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // Atributo que indica el tipo de respuesta HTTP que se produce cuando no se encuentra el recurso
+        public IActionResult GetCategorias(int categoriaId)
+        {
+            var itemCategoria = _ctRepo.GetCategoria(categoriaId); // Obtiene la categoría del repositorio según el identificador proporcionado
+            if (itemCategoria == null)
+            {
+                return NotFound(); // Devuelve una respuesta HTTP 404 Not Found si no se encuentra la categoría
+            }
+            var itemCategoriaDto = _mapper.Map<CategoriaDto>(itemCategoria); // Mapea la categoría a su correspondiente DTO de categoría
+            return Ok(itemCategoriaDto); // Devuelve el DTO de categoría en la respuesta HTTP con código de estado 200 OK
+        }
     }
 }
