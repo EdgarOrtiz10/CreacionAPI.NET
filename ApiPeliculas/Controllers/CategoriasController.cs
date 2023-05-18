@@ -1,4 +1,5 @@
-﻿using ApiPeliculas.Modelos.Dtos; // Importa el namespace de los DTOs de categoría
+﻿using ApiPeliculas.Modelos;
+using ApiPeliculas.Modelos.Dtos; // Importa el namespace de los DTOs de categoría
 using ApiPeliculas.Repositorio.IRepositorio; // Importa el namespace de la interfaz del repositorio de categoría
 using AutoMapper; // Importa el namespace de AutoMapper
 using Microsoft.AspNetCore.Mvc; // Importa el namespace de los atributos y clases relacionados con ASP.NET Core MVC
@@ -54,5 +55,35 @@ namespace ApiPeliculas.Controllers
             var itemCategoriaDto = _mapper.Map<CategoriaDto>(itemCategoria); // Mapea la categoría a su correspondiente DTO de categoría
             return Ok(itemCategoriaDto); // Devuelve el DTO de categoría en la respuesta HTTP con código de estado 200 OK
         }
+
+        [HttpPost] // Atributo que indica que este método responde a una solicitud HTTP POST
+        [ProducesResponseType(201, Type = typeof(CategoriaDto))] // Define el tipo de respuesta HTTP 201 y el tipo de dato devuelto es CategoriaDto
+        [ProducesResponseType(StatusCodes.Status201Created)] // Define el tipo de respuesta HTTP 201 Created
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Define el tipo de respuesta HTTP 400 Bad Request
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)] // Define el tipo de respuesta HTTP 500 Internal Server Error
+        public IActionResult CrearCategoria([FromBody] CrearCategoriaDto crearCategoriaDto) // Método público que crea una categoría, recibe un objeto CrearCategoriaDto en el cuerpo de la solicitud
+        {
+            if (!ModelState.IsValid) // Verifica si el modelo recibido es válido según las validaciones definidas en el modelo
+            {
+                return BadRequest(); // Si el modelo no es válido, retorna una respuesta HTTP 400 Bad Request
+            }
+            if (crearCategoriaDto == null) // Verifica si el objeto CrearCategoriaDto recibido es nulo
+            {
+                return BadRequest(ModelState); // Si es nulo, retorna una respuesta HTTP 400 Bad Request y agrega el estado del modelo actual
+            }
+            if (_ctRepo.ExisteCategoria(crearCategoriaDto.Nombre)) // Verifica si la categoría ya existe en el repositorio
+            {
+                ModelState.AddModelError("", "La categoria ya existe"); // Agrega un error de modelo indicando que la categoría ya existe
+                return StatusCode(404, ModelState); // Retorna una respuesta HTTP 404 Not Found y agrega el estado del modelo actual
+            }
+            var categoria = _mapper.Map<Categoria>(crearCategoriaDto); // Mapea el objeto CrearCategoriaDto a un objeto de tipo Categoria utilizando AutoMapper
+            if (!_ctRepo.CrearCategoria(categoria)) // Intenta crear la categoría en el repositorio
+            {
+                ModelState.AddModelError("", $"Algo salió mal guardando el registro {categoria.Nombre}"); // Agrega un error de modelo indicando que hubo un problema al guardar la categoría
+                return StatusCode(500, ModelState); // Retorna una respuesta HTTP 500 Internal Server Error y agrega el estado del modelo actual
+            }
+            return CreatedAtRoute("GetCategoria", new { categoriaId = categoria.Id }, categoria); // Retorna una respuesta HTTP 201 Created con la categoría creada en el cuerpo de la respuesta y la ubicación de la categoría en el encabezado de la respuesta
+        }
+
     }
 }
