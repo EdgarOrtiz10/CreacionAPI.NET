@@ -14,6 +14,7 @@ namespace ApiPeliculas.PeliculasMapper
         {
             CreateMap<Categoria, CategoriaDto>().ReverseMap();  // Crear un mapeo bidireccional entre Categoria y CategoriaDto
             CreateMap<Categoria, CrearCategoriaDto>().ReverseMap();  // Crear un mapeo bidireccional entre Categoria y CrearCategoriaDto
+            CreateMap<Pelicula, PeliculasDto>().ReverseMap(); // Crear un mapeo bidireccional entre Pelicula y PeliculaDto
         }
     }
 }
