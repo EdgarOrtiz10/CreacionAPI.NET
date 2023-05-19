@@ -11,6 +11,7 @@ namespace ApiPeliculas.Data // Define el espacio de nombres ApiPeliculas.Data
         }
 
         // Agregar los modelos aquí
-        public DbSet<Categoria> Categoria { get; set; } // Propiedad pública de tipo DbSet<Categoria> llamada Categoria. DbSet se utiliza para representar una entidad o una colección de entidades en el contexto de Entity Framework Core.
+        public DbSet<Categoria> Categoria { get; set; } 
+        public DbSet<Pelicula> Pelicula { get; set; }
     }
 }

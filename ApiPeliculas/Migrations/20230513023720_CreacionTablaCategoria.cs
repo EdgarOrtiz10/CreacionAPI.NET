@@ -15,7 +15,7 @@ namespace ApiPeliculas.Migrations // Define el espacio de nombres ApiPeliculas.M
             // Método que aplica los cambios necesarios en la base de datos para reflejar una migración específica
             // El parámetro 'migrationBuilder' permite definir las operaciones de esquema y datos necesarias para la migración hacia adelante
             // Aquí se deben incluir las instrucciones para crear nuevas tablas, modificar tablas existentes, agregar o eliminar columnas, entre otras operaciones relacionadas con el esquema de la base de datos
-            
+
             migrationBuilder.CreateTable( // Crea una nueva tabla en la base de datos
                 name: "Categoria", // Nombre de la tabla
                 columns: table => new // Define las columnas de la tabla
