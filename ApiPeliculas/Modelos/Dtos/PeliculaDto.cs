@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiPeliculas.Modelos.Dtos
 {
-    public class PeliculasDto
+    public class PeliculaDto
     {
         public int Id { get; set; }
 
