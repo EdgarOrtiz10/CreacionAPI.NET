@@ -129,5 +129,33 @@ namespace ApiPeliculas.Controllers
         }
 
 
+        //configura la ruta relativa del endpoint para obtener películas
+        //en una categoría específica utilizando el identificador de la categoría como parte de la URL.
+        [HttpGet("GetPeliculasEnCategoria/{categoriaId:int}")]
+        public IActionResult GetPeliculasEnCategoria(int categoriaId)
+        {
+            // Obtiene la lista de películas correspondientes a una categoría específica
+            var listaPeliculas = _pelRepo.GetPeliculasEnCategoria(categoriaId);
+
+            // Verifica si la lista de películas es nula
+            if (listaPeliculas == null)
+            {
+                // Retorna una respuesta HTTP 404 Not Found si la lista de películas es nula
+                return NotFound();
+            }
+
+            // Crea una lista de objetos PeliculaDto para almacenar las películas mapeadas
+            var itemPelicula = new List<PeliculaDto>();
+
+            // Itera a través de cada elemento en la lista de películas obtenida
+            foreach (var item in listaPeliculas)
+            {
+                // Mapea cada objeto Pelicula a un objeto PeliculaDto y lo agrega a la lista itemPelicula
+                itemPelicula.Add(_mapper.Map<PeliculaDto>(item));
+            }
+
+            // Retorna una respuesta HTTP 200 OK con la lista de películas mapeadas (itemPelicula)
+            return Ok(itemPelicula);
+        }
     }
 }
