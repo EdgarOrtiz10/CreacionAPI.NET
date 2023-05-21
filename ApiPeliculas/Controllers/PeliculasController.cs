@@ -4,6 +4,8 @@ using ApiPeliculas.Repositorio.IRepositorio;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Runtime.Intrinsics.X86;
 
 namespace ApiPeliculas.Controllers
 {
@@ -157,5 +159,34 @@ namespace ApiPeliculas.Controllers
             // Retorna una respuesta HTTP 200 OK con la lista de películas mapeadas (itemPelicula)
             return Ok(itemPelicula);
         }
+
+
+        [HttpGet("Buscar")]
+        public IActionResult Buscar(string nombre)
+        {
+            //se utiliza para manejar excepciones y proporcionar una forma de controlar posibles errores durante la ejecución
+            //del código dentro de ese bloque.
+            try
+            {
+                // Llama al método BuscarPelicula en _pelRepo para buscar películas por nombre
+                var resultado = _pelRepo.BuscarPelicula(nombre.Trim());
+
+                // Verifica si se encontraron resultados en la búsqueda
+                if (resultado.Any())
+                {
+                    // Retorna una respuesta HTTP 200 OK con el resultado de la búsqueda
+                    return Ok(resultado);
+                }
+
+                // Retorna una respuesta HTTP 404 Not Found si no se encontraron resultados en la búsqueda
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                // Retorna una respuesta HTTP 500 Internal Server Error si ocurre una excepción durante la búsqueda
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error recuperando datos");
+            }
+        }
+
     }
 }
