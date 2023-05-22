@@ -165,7 +165,7 @@ namespace ApiPeliculas.Controllers
         public IActionResult Buscar(string nombre)
         {
             //se utiliza para manejar excepciones y proporcionar una forma de controlar posibles errores durante la ejecución
-            //del código dentro de ese bloque.
+            //gidel código dentro de ese bloque.
             try
             {
                 // Llama al método BuscarPelicula en _pelRepo para buscar películas por nombre
