@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ApiPeliculas",
+    "\\ApiPeliculas\\Migrations"
   ],
+  "SelectedNode": "\\ApiPeliculas\\Migrations\\20230513023720_CreacionTablaCategoria.cs",
   "PreviewInSolutionExplorer": false
 }
