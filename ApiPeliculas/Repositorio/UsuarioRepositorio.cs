@@ -2,6 +2,8 @@
 using ApiPeliculas.Modelos;
 using ApiPeliculas.Modelos.Dtos;
 using ApiPeliculas.Repositorio.IRepositorio;
+using Microsoft.AspNetCore.Identity;
+
 namespace ApiPeliculas.Repositorio
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
@@ -33,10 +35,24 @@ namespace ApiPeliculas.Repositorio
             return false; // Retorna false, indicando que el usuario no es único.
         }
 
-        public Task<Usuario> Registro(UsuarioRegistroDto usuarioRegistroDto)
+        public async Task<Usuario> Registro(UsuarioRegistroDto usuarioRegistroDto)
         {
-            throw new NotImplementedException();
+            var passwordEncriptado = obtenermd5(usuarioRegistroDto); // Se encripta la contraseña del usuario utilizando algún método llamado "obtenermd5".
+
+            Usuario usuario = new Usuario() // Se crea un nuevo objeto de tipo Usuario.
+            {
+                NombreUsuario = usuarioRegistroDto.NombreUsuario, // Se asigna el nombre de usuario proporcionado en el objeto "usuarioRegistroDto" al campo "NombreUsuario" del objeto "usuario".
+                Password = passwordEncriptado.Password, // Se asigna la contraseña encriptada al campo "Password" del objeto "usuario".
+                Nombre = usuarioRegistroDto.Nombre, // Se asigna el nombre proporcionado en el objeto "usuarioRegistroDto" al campo "Nombre" del objeto "usuario".
+                Role = usuarioRegistroDto.Role // Se asigna el rol proporcionado en el objeto "usuarioRegistroDto" al campo "Role" del objeto "usuario".
+            };
+
+            _bd.Usuario.Add(usuario); // Se agrega el objeto "usuario" a la base de datos "_bd".
+            await _bd.SaveChangesAsync(); // Se guarda la base de datos de manera asíncrona para persistir los cambios.
+            usuario.Password = passwordEncriptado; // Se asigna la contraseña encriptada al campo "Password" del objeto "usuario" antes de devolverlo.
+            return usuario; // Se devuelve el objeto "usuario".
         }
+
 
         public Task<UsuarioLoginRespuestaDto> Login(UsuarioLoginDto usuarioLoginDto)
         {
